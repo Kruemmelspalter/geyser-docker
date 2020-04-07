@@ -12,8 +12,6 @@ ENV MAX_MEMORY "1024M"
 ENV OVERWRITE_CONFIG "no"
 
 # Bedrock server config
-ENV BEDROCK_ADDRESS "0.0.0.0"
-ENV BEDROCK_PORT "19132"
 ENV BEDROCK_MOTD1 "GeyserMC"
 ENV BEDROCK_MOTD2 "Another GeyserMC forced host."
 
@@ -42,5 +40,7 @@ ADD https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/master/$BUILD_TYPE/artifa
 
 COPY start.sh /usr/local/bin/start.sh
 COPY config.yml.template /opt/config.yml.template
+
+HEALTHCHECK CMD netstat -tln | grep ":19132" > /dev/null; if [ 0 != $? ]; then exit 1; fi;
 
 CMD /bin/bash /usr/local/bin/start.sh
