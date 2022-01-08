@@ -3,10 +3,6 @@
 CONFIG_FILE=/data/config.yml
 
 cd /data
-
-if [ ! -f $CONFIG_FILE ] || [ "$OVERWRITE_CONFIG" == "yes" ]
-then
-    envsubst < /opt/config.yml.template > /data/config.yml
-fi
+envsubst < /opt/config.yml.template > /data/config.yml
 
 java -Xms$INIT_MEMORY -Xmx$MAX_MEMORY -jar /opt/Geyser.jar
